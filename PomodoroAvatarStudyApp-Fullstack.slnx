@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="PomodoroAvatarStudyApp-Fullstack.csproj" />
+  <Folder Name="/PomodoroApi/">
+    <Project Path="PomodoroAvatarStudyApp-Fullstack.csproj" />
+  </Folder>
 </Solution>
