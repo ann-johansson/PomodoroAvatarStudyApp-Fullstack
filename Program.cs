@@ -19,7 +19,7 @@ namespace PomodoroAvatarStudyApp_Fullstack
 			{
 				options.AddPolicy("AllowReact", policy =>
 				{
-					policy.WithOrigins("http://localhost:7288")
+					policy.WithOrigins("http://localhost:5173")
 						  .AllowAnyHeader()
 						  .AllowAnyMethod();
 				});
