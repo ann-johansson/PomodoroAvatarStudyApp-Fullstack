@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
@@ -10,14 +10,14 @@ export default function Login() {
     e.preventDefault()
 
     // Simple validation
-    if (email && password) {
+    if (username && password) {
       // Store token in localStorage (simulated - real app uses API response)
       localStorage.setItem('authToken', 'fake-jwt-token-123')
 
       // Redirect to dashboard
       navigate('/dashboard')
     } else {
-      alert('Please enter email and password')
+      alert('Please enter username and password')
     }
   }
 
@@ -29,7 +29,7 @@ export default function Login() {
           <label>
             Username:
             <input
-              type="username"
+              type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               style={{ display: 'block', width: '100%', padding: '8px', marginTop: '5px' }}
