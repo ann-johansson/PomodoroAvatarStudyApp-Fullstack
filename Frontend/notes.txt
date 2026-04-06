@@ -1,0 +1,1 @@
+“We protect routes on the client for navigation flow, and we protect endpoints on the server for actual security.”
