@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace PomodoroAvatarStudyApp_Fullstack.Controllers
+namespace PomodoroWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

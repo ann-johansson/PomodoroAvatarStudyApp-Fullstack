@@ -1,4 +1,4 @@
-namespace PomodoroAvatarStudyApp_Fullstack
+namespace PomodoroWebAPI
 {
     public class WeatherForecast
     {

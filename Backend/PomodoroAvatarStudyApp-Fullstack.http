@@ -1,6 +1,0 @@
-@PomodoroAvatarStudyApp_Fullstack_HostAddress = http://localhost:5257
-
-GET {{PomodoroAvatarStudyApp_Fullstack_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
