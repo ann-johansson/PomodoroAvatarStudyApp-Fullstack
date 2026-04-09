@@ -5,6 +5,7 @@ using PomodoroWebAPI.Data;
 using PomodoroWebAPI.Services;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using PomodoroWebAPI.Controllers;
 
 namespace PomodoroWebAPI
 {
@@ -45,6 +46,8 @@ namespace PomodoroWebAPI
 
             builder.Services.AddScoped<TokenService>();
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<TaskService>();
+            builder.Services.AddScoped<SubjectService>();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();

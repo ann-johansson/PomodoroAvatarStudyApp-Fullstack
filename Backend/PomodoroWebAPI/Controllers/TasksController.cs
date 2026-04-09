@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PomodoroWebAPI.Data;
 using PomodoroWebAPI.Models;
+using PomodoroWebAPI.Services;
 using System.Security.Claims;
 
 namespace PomodoroWebAPI.Controllers
@@ -11,37 +12,43 @@ namespace PomodoroWebAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class TasksController(AppDbContext context) : ControllerBase
+    public class TasksController(TaskService taskService) : ControllerBase
     {
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<TaskItem>>> GetMyTasks()
-        //{
-        //    // 1. Hämta ID från inloggad användare
-        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-        //    if (userId == null) return Unauthorized();
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TaskItem>>> GetMyTasks()
+        {
+            var tasks = await taskService.GetUserTasksAsync(GetUserId());
+            return Ok(tasks);
+        }
 
-        //    // 2. Hämta bara de tasks som tillhör denna användare
-        //    var tasks = await context.Tasks
-        //        .Where(t => t.UserId == userId)
-        //        .ToListAsync();
+        [HttpPost]
+        public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
+        {
+            var createdTask = await taskService.CreateTaskAsync(task, GetUserId());
+            return Ok(createdTask);
+        }
 
-        //    return Ok(tasks);
-        //}
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TaskItem>> UpdateTask(int id, TaskItem task)
+        {
+            var updatedTask = await taskService.UpdateTaskAsync(id, task, GetUserId());
 
-        //[HttpPost]
-        //public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
-        //{
-        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    if (userId == null) return Unauthorized();
+            if (updatedTask == null) return NotFound("Task not found or does not belong to you.");
 
-        //    // Sätt UserId automatiskt innan vi sparar
-        //    task.UserId = userId;
+            return Ok(updatedTask);
+        }
 
-        //    context.TaskItems.Add(task);
-        //    await context.SaveChangesAsync();
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTask(int id)
+        {
+            var success = await taskService.DeleteTaskAsync(id, GetUserId());
 
-        //    return Ok(task);
-        //}
+            if (!success) return NotFound("Task not found or does not belong to you.");
+
+            return Ok("The task has been deleted.");
+        }
     }
 }
