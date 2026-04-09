@@ -12,8 +12,8 @@ using PomodoroWebAPI.Data;
 namespace PomodoroWebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260409195344_AddUserIdToModels")]
-    partial class AddUserIdToModels
+    [Migration("20260409203353_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,6 +114,9 @@ namespace PomodoroWebAPI.Migrations
                     b.Property<DateTime?>("ActualStartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("BreakIntervalMinutes")
                         .HasColumnType("int");
 
@@ -143,6 +146,8 @@ namespace PomodoroWebAPI.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("SubjectId");
 
@@ -192,6 +197,9 @@ namespace PomodoroWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("datetime2");
 
@@ -229,6 +237,8 @@ namespace PomodoroWebAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("SubjectId");
 
                     b.HasIndex("UserId");
@@ -249,6 +259,10 @@ namespace PomodoroWebAPI.Migrations
 
             modelBuilder.Entity("PomodoroWebAPI.Models.StudySession", b =>
                 {
+                    b.HasOne("PomodoroWebAPI.Models.AppUser", null)
+                        .WithMany("StudySessions")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("PomodoroWebAPI.Models.Subject", "Subject")
                         .WithMany("StudySessions")
                         .HasForeignKey("SubjectId")
@@ -256,9 +270,9 @@ namespace PomodoroWebAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("PomodoroWebAPI.Models.AppUser", "User")
-                        .WithMany("StudySessions")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Subject");
@@ -279,6 +293,10 @@ namespace PomodoroWebAPI.Migrations
 
             modelBuilder.Entity("PomodoroWebAPI.Models.TaskItem", b =>
                 {
+                    b.HasOne("PomodoroWebAPI.Models.AppUser", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("PomodoroWebAPI.Models.Subject", "Subject")
                         .WithMany("Tasks")
                         .HasForeignKey("SubjectId")
@@ -286,9 +304,9 @@ namespace PomodoroWebAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("PomodoroWebAPI.Models.AppUser", "User")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Subject");

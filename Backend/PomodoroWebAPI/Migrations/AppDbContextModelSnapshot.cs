@@ -24,11 +24,8 @@ namespace PomodoroWebAPI.Migrations
 
             modelBuilder.Entity("PomodoroWebAPI.Models.AppUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Coins")
                         .HasColumnType("int");
@@ -89,8 +86,9 @@ namespace PomodoroWebAPI.Migrations
                     b.Property<DateTime>("PurchasedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -112,6 +110,9 @@ namespace PomodoroWebAPI.Migrations
 
                     b.Property<DateTime?>("ActualStartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("BreakIntervalMinutes")
                         .HasColumnType("int");
@@ -137,10 +138,13 @@ namespace PomodoroWebAPI.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("SubjectId");
 
@@ -171,8 +175,9 @@ namespace PomodoroWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -189,6 +194,9 @@ namespace PomodoroWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("datetime2");
 
@@ -196,7 +204,6 @@ namespace PomodoroWebAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DueDate")
@@ -221,10 +228,13 @@ namespace PomodoroWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("SubjectId");
 
@@ -246,6 +256,10 @@ namespace PomodoroWebAPI.Migrations
 
             modelBuilder.Entity("PomodoroWebAPI.Models.StudySession", b =>
                 {
+                    b.HasOne("PomodoroWebAPI.Models.AppUser", null)
+                        .WithMany("StudySessions")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("PomodoroWebAPI.Models.Subject", "Subject")
                         .WithMany("StudySessions")
                         .HasForeignKey("SubjectId")
@@ -253,9 +267,9 @@ namespace PomodoroWebAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("PomodoroWebAPI.Models.AppUser", "User")
-                        .WithMany("StudySessions")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Subject");
@@ -267,13 +281,19 @@ namespace PomodoroWebAPI.Migrations
                 {
                     b.HasOne("PomodoroWebAPI.Models.AppUser", "User")
                         .WithMany("Subjects")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("PomodoroWebAPI.Models.TaskItem", b =>
                 {
+                    b.HasOne("PomodoroWebAPI.Models.AppUser", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("PomodoroWebAPI.Models.Subject", "Subject")
                         .WithMany("Tasks")
                         .HasForeignKey("SubjectId")
@@ -281,9 +301,9 @@ namespace PomodoroWebAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("PomodoroWebAPI.Models.AppUser", "User")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Subject");
