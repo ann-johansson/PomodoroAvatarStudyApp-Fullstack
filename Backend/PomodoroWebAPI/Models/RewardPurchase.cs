@@ -7,7 +7,10 @@ namespace PomodoroWebAPI.Models
     {
         [Key]
         public int Id { get; set; }
-        public int UserId { get; set; }
+
+        [Required] 
+        public string UserId { get; set; } = string.Empty;
+
         [ForeignKey("UserId")]
         public AppUser User { get; set; }
         public string ItemName { get; set; }
