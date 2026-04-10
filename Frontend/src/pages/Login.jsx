@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './Login.css'
 
 export default function Login() {
   const [username, setUsername] = useState('')
@@ -22,38 +23,37 @@ export default function Login() {
   }
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div style={{ marginBottom: '15px' }}>
+    <section className="login-page">
+      <div className="login-card">
+        <p className="login-kicker">Welcome back</p>
+        <h1>Sign in to continue</h1>
+
+        <form className="login-form" onSubmit={handleLogin}>
           <label>
-            Username:
+            Username
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={{ display: 'block', width: '100%', padding: '8px', marginTop: '5px' }}
             />
           </label>
-        </div>
-        <div style={{ marginBottom: '15px' }}>
+
           <label>
-            Password:
+            Password
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ display: 'block', width: '100%', padding: '8px', marginTop: '5px' }}
             />
           </label>
-        </div>
-        <button type="submit" style={{ padding: '10px 20px', cursor: 'pointer' }}>
-          Login
-        </button>
-      </form>
-      <p style={{ marginTop: '20px', color: '#666' }}>
-        Demo: Use any email/password to test (no real validation yet)
-      </p>
-    </div>
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p className="login-hint">
+          Demo: Use any username/password to test (no real validation yet)
+        </p>
+      </div>
+    </section>
   )
 }
