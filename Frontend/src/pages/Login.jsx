@@ -12,7 +12,7 @@ export default function Login() {
   const [isError, setIsError] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5168'
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://localhost:7012'
 
   const handleAuthSubmit = async (e) => {
     e.preventDefault()
@@ -61,7 +61,8 @@ export default function Login() {
         return
       }
 
-      const loginResponse = await fetch(`${apiBaseUrl}5173/api/auth/login`, {
+      // Anrop till din C#-backend
+      const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +92,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error('Nätverksfel:', error)
-      alert('Kunde inte ansluta till servern.')
+      alert('Kunde inte ansluta till servern. Har du startat C#-backend?')
       setIsError(true)
       setMessage(error.message || 'Something went wrong. Please try again.')
     } finally {
