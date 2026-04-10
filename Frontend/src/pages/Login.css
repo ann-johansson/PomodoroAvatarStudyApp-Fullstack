@@ -1,9 +1,9 @@
 .login-page {
-  --tone-ink: #2f3a35;
-  --tone-muted: #5c6b64;
-  --tone-border: rgba(97, 116, 107, 0.26);
-  --tone-surface: rgba(255, 255, 255, 0.8);
-  --tone-shadow: 0 14px 30px rgba(31, 48, 41, 0.1);
+  --tone-ink: var(--color-text);
+  --tone-muted: var(--color-muted);
+  --tone-border: var(--color-border-strong);
+  --tone-surface: var(--color-surface);
+  --tone-shadow: var(--shadow-elevated);
 
   min-height: calc(100svh - 140px);
   display: grid;
@@ -53,12 +53,12 @@
   border: 1px solid var(--tone-border);
   border-radius: 10px;
   padding: 0.65rem 0.72rem;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--color-surface-strong);
   color: var(--tone-ink);
 }
 
 .login-form input:focus-visible {
-  outline: 2px solid rgba(102, 132, 116, 0.5);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -68,8 +68,8 @@
   border-radius: 10px;
   padding: 0.75rem 1rem;
   cursor: pointer;
-  background: linear-gradient(130deg, #6b8f7e, #4f7665);
-  color: #f5f8f7;
+  background: linear-gradient(130deg, var(--color-primary-soft), var(--color-primary));
+  color: var(--color-on-primary);
   font-weight: 600;
 }
 

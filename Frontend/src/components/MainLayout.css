@@ -1,6 +1,6 @@
 .app-shell {
   min-height: 100svh;
-  background: linear-gradient(180deg, #f5f1e9 0%, #efe7db 100%);
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
 }
 
 .app-content {

@@ -3,14 +3,14 @@
   gap: 0.5rem;
   align-items: center;
   padding: 0.85rem 1.1rem;
-  border-bottom: 1px solid rgba(98, 117, 108, 0.22);
-  background: rgba(245, 241, 233, 0.78);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
   backdrop-filter: blur(3px);
 }
 
 .app-nav a {
   text-decoration: none;
-  color: #32403a;
+  color: var(--color-link);
   font-weight: 600;
   border-radius: 999px;
   padding: 0.36rem 0.8rem;
@@ -19,6 +19,6 @@
 
 .app-nav a:hover,
 .app-nav a:focus-visible {
-  background: rgba(111, 140, 124, 0.2);
+  background: var(--color-link-hover-bg);
   outline: none;
 }
