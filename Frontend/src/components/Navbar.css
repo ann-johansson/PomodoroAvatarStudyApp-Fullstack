@@ -1,11 +1,16 @@
 .app-nav {
   display: flex;
-  gap: 0.5rem;
   align-items: center;
   padding: 0.85rem 1.1rem;
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
   backdrop-filter: blur(3px);
+}
+
+.app-nav-links {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .app-nav a {
@@ -21,4 +26,84 @@
 .app-nav a:focus-visible {
   background: var(--color-link-hover-bg);
   outline: none;
+}
+
+.app-nav-tools {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.app-theme-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-theme-select-wrap:focus-within {
+  outline: none;
+}
+
+.app-theme-select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 0.25rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-right: 1.5px solid var(--color-muted);
+  border-bottom: 1.5px solid var(--color-muted);
+  transform: rotate(45deg) translateY(-1px);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.app-nav-tools select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0;
+  border-bottom: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text);
+  border-radius: 0;
+  padding: 0.18rem 1.15rem 0.2rem 0.15rem;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.app-nav-tools select:focus,
+.app-nav-tools select:focus-visible {
+  outline: none;
+  outline-offset: 0;
+  border-bottom-color: var(--color-border-strong);
+  box-shadow: none;
+}
+
+.app-nav-tools select:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.app-nav-tools select::-ms-expand {
+  display: none;
+}
+
+.app-nav-tools select:hover {
+  border-bottom-color: var(--color-primary);
+}
+
+@media (max-width: 680px) {
+  .app-nav {
+    flex-wrap: wrap;
+    row-gap: 0.55rem;
+  }
+
+  .app-nav-tools {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

@@ -78,58 +78,6 @@
   color: var(--home-muted);
 }
 
-.theme-switcher {
-  margin: 2.2rem auto 0;
-  width: min(720px, 100%);
-  text-align: center;
-  border: 1px solid var(--home-border);
-  background: var(--home-surface);
-  border-radius: 14px;
-  box-shadow: var(--home-shadow);
-  padding: 1rem;
-}
-
-.theme-switcher h2 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: var(--home-text);
-}
-
-.theme-switcher p {
-  margin-top: 0.4rem;
-  color: var(--home-muted);
-}
-
-.theme-buttons {
-  margin-top: 0.8rem;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-}
-
-.theme-buttons button {
-  border: 1px solid var(--home-border);
-  background: var(--color-surface-strong);
-  color: var(--home-text);
-  border-radius: 999px;
-  padding: 0.42rem 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.theme-buttons button:hover,
-.theme-buttons button:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--color-focus-ring);
-}
-
-.theme-buttons button.is-active {
-  background: var(--color-primary);
-  border-color: var(--color-primary-strong);
-  color: var(--color-on-primary);
-}
-
 @media (max-width: 860px) {
   .home-page {
     padding: 2.5rem 1rem 3rem;
@@ -141,9 +89,5 @@
 
   .home-card {
     padding: 1rem;
-  }
-
-  .theme-switcher {
-    padding: 0.9rem;
   }
 }

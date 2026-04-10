@@ -1,28 +1,6 @@
-import { useMemo, useState } from 'react'
 import './Home.css'
 
 export default function Home() {
-  const themeOptions = useMemo(
-    () => [
-      { id: 'calm-green', label: 'Calm Green' },
-      { id: 'soft-blue', label: 'Soft Blue' },
-      { id: 'pastel-lilac', label: 'Pastel Lilac' },
-      { id: 'warm-beige', label: 'Warm Beige' },
-    ],
-    [],
-  )
-
-  const [activeTheme, setActiveTheme] = useState(() => {
-    const rootTheme = document.documentElement.getAttribute('data-theme')
-    return rootTheme || 'calm-green'
-  })
-
-  const applyTheme = (themeId) => {
-    document.documentElement.setAttribute('data-theme', themeId)
-    localStorage.setItem('siteTheme', themeId)
-    setActiveTheme(themeId)
-  }
-
   return (
     <main className="home-page">
       <section className="home-hero">
@@ -58,24 +36,6 @@ export default function Home() {
             stronger each day.
           </p>
         </article>
-      </section>
-
-      <section className="theme-switcher" aria-label="Theme switcher">
-        <h2>Pick your theme</h2>
-        <p>Choose the palette that feels most calm today.</p>
-
-        <div className="theme-buttons" role="group" aria-label="Theme options">
-          {themeOptions.map((theme) => (
-            <button
-              key={theme.id}
-              type="button"
-              className={activeTheme === theme.id ? 'is-active' : ''}
-              onClick={() => applyTheme(theme.id)}
-            >
-              {theme.label}
-            </button>
-          ))}
-        </div>
       </section>
     </main>
   )
