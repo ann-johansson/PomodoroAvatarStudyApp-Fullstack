@@ -48,6 +48,7 @@ namespace PomodoroWebAPI
             builder.Services.AddScoped<AuthService>();
             builder.Services.AddScoped<TaskService>();
             builder.Services.AddScoped<SubjectService>();
+            builder.Services.AddScoped<StudySessionService>();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
