@@ -36,6 +36,29 @@
   color: var(--tone-ink);
 }
 
+.auth-toggle {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.auth-toggle button {
+  border: 1px solid var(--tone-border);
+  background: var(--color-surface-strong);
+  color: var(--tone-ink);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-toggle button.active {
+  background: linear-gradient(130deg, var(--color-primary-soft), var(--color-primary));
+  color: var(--color-on-primary);
+  border-color: transparent;
+}
+
 .login-form {
   margin-top: 1rem;
   display: grid;
@@ -71,6 +94,24 @@
   background: linear-gradient(130deg, var(--color-primary-soft), var(--color-primary));
   color: var(--color-on-primary);
   font-weight: 600;
+}
+
+.login-form button:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.auth-message {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+}
+
+.auth-message.error {
+  color: #b1002b;
+}
+
+.auth-message.success {
+  color: #1b6f2a;
 }
 
 .login-hint {
