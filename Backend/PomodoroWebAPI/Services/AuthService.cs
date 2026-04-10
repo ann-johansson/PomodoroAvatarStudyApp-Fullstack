@@ -20,6 +20,7 @@ namespace PomodoroWebAPI.Services
             var passwordHasher = new PasswordHasher<AppUser>();
             var user = new AppUser
             {
+                Id = Guid.NewGuid().ToString(),
                 UserName = registerDto.Username,
                 Email = registerDto.Email,
                 Role = "User",
