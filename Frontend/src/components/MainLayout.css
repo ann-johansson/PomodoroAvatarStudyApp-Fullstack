@@ -1,0 +1,11 @@
+.app-shell {
+  min-height: 100svh;
+  background: linear-gradient(180deg, #f5f1e9 0%, #efe7db 100%);
+}
+
+.app-content {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 1.1rem;
+  box-sizing: border-box;
+}
