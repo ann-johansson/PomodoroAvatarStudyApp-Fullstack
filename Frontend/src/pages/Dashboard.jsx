@@ -2,8 +2,21 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Dashboard.css'
 
+const getUserRole = () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    // Microsofts JWT claims mappar roller till denna långa URL-nyckel
+    return payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+  } catch (e) {
+    return null;
+  }
+}
+
 export default function Dashboard() {
   const navigate = useNavigate()
+  const userRole = getUserRole()
   
   // Timer State
   const [focusTimeLeft, setFocusTimeLeft] = useState(25 * 60)
@@ -346,13 +359,30 @@ export default function Dashboard() {
     <section className="dashboard-page">
       <header className="dashboard-header">
         <div className="header-info">
-          <p className="dashboard-kicker">Welcome back, Scholar!</p>
+          <p className="dashboard-kicker">Welcome back, Scholar! {userRole === 'Admin' && <span style={{color: 'red', marginLeft: '10px', fontWeight: 'bold'}}>ADMIN</span>}</p>
           <h1>Focus Dashboard</h1>
         </div>
-        <button className="btn-secondary" onClick={handleLogout}>
-          Logout
-        </button>
+        <div style={{display: 'flex', gap: '1rem'}}>
+          {userRole === 'Admin' && (
+            <button className="btn-secondary" style={{borderColor: 'red', color: 'red'}}>
+              Admin Panel
+            </button>
+          )}
+          <button className="btn-secondary" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </header>
+
+      {userRole === 'Admin' && (
+        <article className="dashboard-card" style={{ border: '2px solid var(--gold-accent)', marginBottom: '1.5rem', background: 'var(--dash-card-bg, #1a1a2e)' }}>
+          <h2>👑 Admin Panel</h2>
+          <p style={{ marginBottom: '1rem', color: 'var(--dash-gray)' }}>Du är inloggad som administratör.</p>
+          <button className="btn-primary" onClick={() => alert("Här skulle vi kunna hämta alla tasks från /api/tasks/all!")}>
+            Hämta all systemdata
+          </button>
+        </article>
+      )}
 
       <div className="dashboard-grid">
         {/* Left Column: Timer & Tasks */}
