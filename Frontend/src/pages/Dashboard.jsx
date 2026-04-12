@@ -300,9 +300,53 @@ export default function Dashboard() {
     }
   }
 
+  // Admin function to fetch everything
+  const handleFetchAllSystemTasks = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+    
+    try {
+      const res = await fetch('http://localhost:5168/api/tasks/all', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (res.ok) {
+        const allSystemTasks = await res.json();
+        console.log("👑 ADMIN - ALL SYSTEM TASKS:", allSystemTasks);
+        alert(`Success! You fetched ${allSystemTasks.length} total tasks from the database! Check the browser console (F12) to see all the hidden data.`);
+      } else if (res.status === 403) {
+        alert("Access Denied: Your account doesn't have the 'Admin' role!");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('authToken')
     navigate('/login')
+  }
+
+  const handleCheckAccess = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+    
+    try {
+      // Testing an endpoint protected by [Authorize(Roles = "Admin")]
+      const res = await fetch('http://localhost:5168/api/tasks/all', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (res.ok) {
+        alert("✅ Success! You have Admin access!");
+      } else if (res.status === 403) {
+        alert("❌ Access Denied! You do not have Admin privileges.");
+      } else {
+        alert(`Request failed with status: ${res.status}`);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   // Formatting time
@@ -363,6 +407,20 @@ export default function Dashboard() {
           <h1>Focus Dashboard</h1>
         </div>
         <div style={{display: 'flex', gap: '1rem'}}>
+          <button 
+            className="btn-primary" 
+            onClick={handleCheckAccess} 
+            style={{ 
+              backgroundColor: '#ffb86c', 
+              color: '#282a36', 
+              fontWeight: 'bold', 
+              border: 'none', 
+              boxShadow: '0 4px 15px rgba(255, 184, 108, 0.4)',
+              transform: 'scale(1.05)'
+            }}
+          >
+            🔐 Do I have access?
+          </button>
           {userRole === 'Admin' && (
             <button className="btn-secondary" style={{borderColor: 'red', color: 'red'}}>
               Admin Panel
@@ -377,9 +435,9 @@ export default function Dashboard() {
       {userRole === 'Admin' && (
         <article className="dashboard-card" style={{ border: '2px solid var(--gold-accent)', marginBottom: '1.5rem', background: 'var(--dash-card-bg, #1a1a2e)' }}>
           <h2>👑 Admin Panel</h2>
-          <p style={{ marginBottom: '1rem', color: 'var(--dash-gray)' }}>Du är inloggad som administratör.</p>
-          <button className="btn-primary" onClick={() => alert("Här skulle vi kunna hämta alla tasks från /api/tasks/all!")}>
-            Hämta all systemdata
+          <p style={{ marginBottom: '1rem', color: 'var(--dash-gray)' }}>You are logged in as an Administrator.</p>
+          <button className="btn-primary" onClick={handleFetchAllSystemTasks}>
+            Fetch All System Data 
           </button>
         </article>
       )}
