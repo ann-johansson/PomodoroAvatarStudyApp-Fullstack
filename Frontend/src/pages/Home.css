@@ -1,0 +1,103 @@
+.home-page {
+  --home-bg-soft: var(--color-bg-accent);
+  --home-bg-warm: var(--color-bg-accent);
+  --home-surface: var(--color-surface);
+  --home-text: var(--color-text);
+  --home-muted: var(--color-muted);
+  --home-border: var(--color-border);
+  --home-shadow: var(--shadow-soft);
+
+  flex: 1;
+  min-height: 100%;
+  padding: 3.5rem 0 4.5rem;
+  color: var(--home-text);
+  background:
+    radial-gradient(circle at 10% 12%, var(--overlay-light), transparent 35%),
+    radial-gradient(circle at 88% 8%, var(--overlay-mint), transparent 30%),
+    linear-gradient(135deg, var(--home-bg-soft), var(--home-bg-warm));
+}
+
+.home-hero {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.home-kicker {
+  margin-bottom: 0.8rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--home-muted);
+  font-weight: 600;
+}
+
+.home-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 3.35rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--home-text);
+}
+
+.home-subtitle {
+  margin: 1.1rem auto 0;
+  max-width: 62ch;
+  font-size: 1.03rem;
+  line-height: 1.7;
+  color: var(--home-muted);
+}
+
+.home-cards {
+  margin: 2.8rem auto 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, white 42%, var(--home-bg-soft) 58%);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--home-text) 10%, transparent);
+}
+
+.home-card {
+  padding: 1.25rem 1.3rem;
+  text-align: left;
+  border-right: 0;
+  background: transparent;
+  backdrop-filter: blur(1px);
+}
+
+.home-card h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--home-text);
+}
+
+.home-card p {
+  margin-top: 0.55rem;
+  font-size: 0.96rem;
+  line-height: 1.62;
+  color: var(--home-muted);
+}
+
+@media (max-width: 860px) {
+  .home-page {
+    padding: 2.5rem 0 3rem;
+  }
+
+  .home-hero {
+    padding: 0 1rem;
+  }
+
+  .home-cards {
+    grid-template-columns: 1fr;
+    border-radius: 0;
+  }
+
+  .home-card {
+    padding: 1rem;
+    border-right: 0;
+    border-bottom: 0;
+  }
+}

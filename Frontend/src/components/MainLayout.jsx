@@ -1,10 +1,11 @@
 import Navbar from './Navbar'
+import './MainLayout.css'
 
 export default function MainLayout({ children }) {
   return (
-    <div>
+    <div className="app-shell">
       <Navbar />
-      <main style={{ padding: '20px' }}>{children}</main>
+      <main className="app-content">{children}</main>
     </div>
   )
 }
