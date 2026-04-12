@@ -20,7 +20,11 @@ namespace PomodoroWebAPI
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+                });
 
             // 1. Hämta JWT-inställningar
             var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -80,7 +84,8 @@ namespace PomodoroWebAPI
                 });
             }
 
-            app.UseHttpsRedirection();
+            // Prevent redirecting HTTP to HTTPS during local dev to fix CORS preflight issues
+            // app.UseHttpsRedirection();
 
             app.UseCors("AllowReactApp"); // Apply the CORS policy
 

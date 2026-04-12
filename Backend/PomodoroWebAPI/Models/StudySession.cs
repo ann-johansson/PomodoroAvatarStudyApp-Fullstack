@@ -18,11 +18,11 @@ namespace PomodoroWebAPI.Models
         [Required]
         public string UserId { get; set; } = string.Empty;
         [ForeignKey("UserId")]
-        public AppUser User { get; set; }
+        public AppUser? User { get; set; }
 
         public int SubjectId { get; set; }
         [ForeignKey("SubjectId")]
-        public Subject Subject { get; set; }
+        public Subject? Subject { get; set; }
         public DateTime PlannedStartTime { get; set; }
         public DateTime? ActualStartTime { get; set; }
         public DateTime? EndTime { get; set; }
