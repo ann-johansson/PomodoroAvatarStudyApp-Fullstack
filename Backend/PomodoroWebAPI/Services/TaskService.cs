@@ -57,5 +57,11 @@ namespace PomodoroWebAPI.Services
             await context.SaveChangesAsync();
             return true;
         }
+
+        // ADMIN: GET ALL TASKS
+        public async Task<IEnumerable<TaskItem>> GetAllTasksAdminAsync()
+        {
+            return await context.Tasks.ToListAsync(); // Hämtar ALLA användares tasks
+        }
     }
 }

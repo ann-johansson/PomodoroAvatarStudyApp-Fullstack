@@ -24,6 +24,15 @@ namespace PomodoroWebAPI.Controllers
             return Ok(tasks);
         }
 
+        // ADMIN ENDPOINT
+        [Authorize(Roles = "Admin")]
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<TaskItem>>> GetAllTasksAdmin()
+        {
+            var tasks = await taskService.GetAllTasksAdminAsync();
+            return Ok(tasks);
+        }
+
         [HttpPost]
         public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
         {
