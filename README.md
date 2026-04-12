@@ -1,17 +1,17 @@
 # Pomodoro Avatar Study App
 
-En gamifierad studieapplikation byggd med .NET Core Web API och React. Appen hjälper användare att fokusera med Pomodoro-tekniken samtidigt som de samlar XP och levlar upp sin avatar genom att slutföra studieuppgifter ("Quests").
+En pomodoro studieapplikation byggd med .NET Core Web API och React. Appen hjälper användare att fokusera med Pomodoro-tekniken, planen var att den samtidigt skall samla XP och levla upp en avatar genom att slutföra studieuppgifter ("Quests"), detta kommer läggas till under framtida uppdateringar.
 
 ## 🚀 Funktioner
 - **Fullstack-integration:** Komplett flöde från SQL-databas till React-frontend.
 - **JWT-Autentisering:** Säker inloggning och registrering.
 - **Rollbaserad åtkomst:** Olika vyer och rättigheter för `User` och `Admin`.
 - **Gamification:** XP-system kopplat till avklarade uppgifter.
-- **Responsiv design:** Fungerar på både desktop och mobila enheter.
+- **Responsiv design:** Fungerar på enheter med olika storlekar.
 
 ## 🛠 Teknikstack
-- **Backend:** .NET 8/10 Web API, Entity Framework Core, SQL Server Express.
-- **Frontend:** React (Vite), CSS3, JavaScript (ES6+).
+- **Backend:** .NET 10 Web API, Entity Framework Core, SQL Server Express.
+- **Frontend:** React (Vite), CSS, JavaScript.
 - **Säkerhet:** JSON Web Tokens (JWT) med Role-claims, BCrypt för lösenordshashning.
 
 ## 💻 Installation & Setup
@@ -28,6 +28,6 @@ En gamifierad studieapplikation byggd med .NET Core Web API och React. Appen hj�
 3. Starta utvecklingsservern: `npm run dev`.
 
 ## 👥 Gruppmedlemmar & Bidrag
-- **[Namn 1]:** Backend-arkitektur, Services-lager, JWT-implementering.
-- **[Namn 2]:** Frontend-utveckling, Dashboard-logik, API-integration.
-- **[Namn 3]:** Databasdesign, Modeller, CSS/Responsiv design.
+- **[Milo & Ann]:** CORS, Services, EF Core relationer.
+- **[Milo]:** Frontend-utveckling, Dashboard-logik, API-integration.
+- **[Ann]:** Backend-arkitektur, Databasdesign, Autentisering och JWT-logik.
