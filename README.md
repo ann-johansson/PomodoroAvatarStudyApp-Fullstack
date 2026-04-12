@@ -12,7 +12,7 @@ En pomodoro studieapplikation byggd med .NET Core Web API och React. Appen hjäl
 ## 🛠 Teknikstack
 - **Backend:** .NET 10 Web API, Entity Framework Core, SQL Server Express.
 - **Frontend:** React (Vite), CSS, JavaScript.
-- **Säkerhet:** JSON Web Tokens (JWT) med Role-claims, BCrypt för lösenordshashning.
+- **Säkerhet:** JSON Web Tokens (JWT) med Role-claims, samt ASP.NET Core Identity PasswordHasher för lösenordshantering.
 
 ## 💻 Installation & Setup
 
