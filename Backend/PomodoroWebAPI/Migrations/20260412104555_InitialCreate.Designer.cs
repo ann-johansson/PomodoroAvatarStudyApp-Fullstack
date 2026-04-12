@@ -12,7 +12,7 @@ using PomodoroWebAPI.Data;
 namespace PomodoroWebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260409203353_InitialCreate")]
+    [Migration("20260412104555_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
