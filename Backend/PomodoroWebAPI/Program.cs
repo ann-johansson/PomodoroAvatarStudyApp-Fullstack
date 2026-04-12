@@ -1,11 +1,12 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using PomodoroWebAPI.Data;
-using PomodoroWebAPI.Services;
-using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using PomodoroWebAPI.Controllers;
+using PomodoroWebAPI.Data;
+using PomodoroWebAPI.Models;
+using PomodoroWebAPI.Services;
+using System.Text;
 
 namespace PomodoroWebAPI
 {
@@ -20,7 +21,11 @@ namespace PomodoroWebAPI
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+                });
 
             // 1. Hämta JWT-inställningar
             var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -80,7 +85,8 @@ namespace PomodoroWebAPI
                 });
             }
 
-            app.UseHttpsRedirection();
+            // Prevent redirecting HTTP to HTTPS during local dev to fix CORS preflight issues
+            // app.UseHttpsRedirection();
 
             app.UseCors("AllowReactApp"); // Apply the CORS policy
 
@@ -89,6 +95,26 @@ namespace PomodoroWebAPI
 
 
             app.MapControllers();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.Migrate(); // Skapar databasen automatiskt om den saknas
+
+                if (!dbContext.Users.Any())
+                {
+                    var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<AppUser>();
+
+                    var adminUser = new AppUser { Id = Guid.NewGuid().ToString(), UserName = "admin", Email = "admin@test.com", Role = "Admin", DisplayName = "Administrator" };
+                    adminUser.PasswordHash = hasher.HashPassword(adminUser, "Admin123!");
+
+                    var normalUser = new AppUser { Id = Guid.NewGuid().ToString(), UserName = "user", Email = "user@test.com", Role = "User", DisplayName = "Student" };
+                    normalUser.PasswordHash = hasher.HashPassword(normalUser, "User123!");
+
+                    dbContext.Users.AddRange(adminUser, normalUser);
+                    dbContext.SaveChanges();
+                }
+            }
 
             app.Run();
         }

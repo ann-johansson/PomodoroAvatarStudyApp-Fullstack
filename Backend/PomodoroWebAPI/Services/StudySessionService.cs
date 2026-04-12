@@ -19,7 +19,11 @@ namespace PomodoroWebAPI.Services
         public async Task<StudySession> CreateSessionAsync(StudySession session, string userId)
         {
             session.UserId = userId;
-            session.Status = SessionStatus.Planned;
+            // Only default to Planned if it hasn't been set to Completed yet
+            if (session.Status == SessionStatus.Planned && session.ActualDurationMinutes == 0)
+            {
+                session.Status = SessionStatus.Planned;
+            }
 
             context.StudySessions.Add(session);
             await context.SaveChangesAsync();
