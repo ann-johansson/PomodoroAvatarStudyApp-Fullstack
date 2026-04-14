@@ -19,6 +19,7 @@ export default function Home() {
 
       <section className="home-cards" aria-label="How it works">
         <article className="home-card">
+          <div className="home-card-icon">🎯</div>
           <h2>Set one clear task</h2>
           <p>
             Start with a single intention, then give it your full attention for
@@ -27,6 +28,7 @@ export default function Home() {
         </article>
 
         <article className="home-card">
+          <div className="home-card-icon">📈</div>
           <h2>Track your sessions</h2>
           <p>
             Keep a simple log of what you completed and where your energy felt
@@ -35,6 +37,7 @@ export default function Home() {
         </article>
 
         <article className="home-card">
+          <div className="home-card-icon">🌱</div>
           <h2>Reward consistency</h2>
           <p>
             Celebrate small wins as your avatar grows and your study habit gets
