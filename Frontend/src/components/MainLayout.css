@@ -2,10 +2,7 @@
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(circle at 10% 12%, var(--overlay-light), transparent 35%),
-    radial-gradient(circle at 88% 8%, var(--overlay-mint), transparent 30%),
-    linear-gradient(135deg, var(--color-bg-soft), var(--color-bg-accent));
+  background: var(--color-bg);
 }
 
 .app-content {
