@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Avatar from './pages/Avatar'
 
 function App() {
   return (
@@ -16,6 +17,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/avatar"
+          element={
+            <ProtectedRoute>
+              <Avatar />
             </ProtectedRoute>
           }
         />

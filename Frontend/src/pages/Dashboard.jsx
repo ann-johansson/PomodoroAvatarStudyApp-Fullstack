@@ -2,8 +2,32 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Dashboard.css'
 
+const getUserRole = () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    // Microsofts JWT claims mappar roller till denna långa URL-nyckel
+    return payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+  } catch (e) {
+    return null;
+  }
+}
+
+const getUserName = () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) return 'Student';
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 'Student';
+  } catch (e) {
+    return 'Student';
+  }
+}
+
 export default function Dashboard() {
   const navigate = useNavigate()
+  const userRole = getUserRole()
   
   // Timer State
   const [focusTimeLeft, setFocusTimeLeft] = useState(25 * 60)
@@ -57,7 +81,7 @@ export default function Dashboard() {
 
   // Fake User Stats
   const userStats = {
-    username: 'Scholar',
+    username: getUserName(),
     level: 12,
     xp: 450,
     xpRequired: 1000,
@@ -287,9 +311,53 @@ export default function Dashboard() {
     }
   }
 
+  // Admin function to fetch everything
+  const handleFetchAllSystemTasks = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+    
+    try {
+      const res = await fetch('http://localhost:5168/api/tasks/all', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (res.ok) {
+        const allSystemTasks = await res.json();
+        console.log("👑 ADMIN - ALL SYSTEM TASKS:", allSystemTasks);
+        alert(`Success! You fetched ${allSystemTasks.length} total tasks from the database! Check the browser console (F12) to see all the hidden data.`);
+      } else if (res.status === 403) {
+        alert("Access Denied: Your account doesn't have the 'Admin' role!");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('authToken')
     navigate('/login')
+  }
+
+  const handleCheckAccess = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+    
+    try {
+      // Testing an endpoint protected by [Authorize(Roles = "Admin")]
+      const res = await fetch('http://localhost:5168/api/tasks/all', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (res.ok) {
+        alert("✅ Success! You have Admin access!");
+      } else if (res.status === 403) {
+        alert("❌ Access Denied! You do not have Admin privileges.");
+      } else {
+        alert(`Request failed with status: ${res.status}`);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   // Formatting time
@@ -346,13 +414,44 @@ export default function Dashboard() {
     <section className="dashboard-page">
       <header className="dashboard-header">
         <div className="header-info">
-          <p className="dashboard-kicker">Welcome back, Scholar!</p>
+          <p className="dashboard-kicker">Welcome back, Scholar! {userRole === 'Admin' && <span style={{color: 'red', marginLeft: '10px', fontWeight: 'bold'}}>ADMIN</span>}</p>
           <h1>Focus Dashboard</h1>
         </div>
-        <button className="btn-secondary" onClick={handleLogout}>
-          Logout
-        </button>
+        <div style={{display: 'flex', gap: '1rem'}}>
+          <button 
+            className="btn-primary" 
+            onClick={handleCheckAccess} 
+            style={{ 
+              backgroundColor: '#ffb86c', 
+              color: '#282a36', 
+              fontWeight: 'bold', 
+              border: 'none', 
+              boxShadow: '0 4px 15px rgba(255, 184, 108, 0.4)',
+              transform: 'scale(1.05)'
+            }}
+          >
+            🔐 Do I have access?
+          </button>
+          {userRole === 'Admin' && (
+            <button className="btn-secondary" style={{borderColor: 'red', color: 'red'}}>
+              Admin Panel
+            </button>
+          )}
+          <button className="btn-secondary" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </header>
+
+      {userRole === 'Admin' && (
+        <article className="dashboard-card" style={{ border: '2px solid var(--gold-accent)', marginBottom: '1.5rem', background: 'var(--dash-card-bg, #1a1a2e)' }}>
+          <h2>👑 Admin Panel</h2>
+          <p style={{ marginBottom: '1rem', color: 'var(--dash-gray)' }}>You are logged in as an Administrator.</p>
+          <button className="btn-primary" onClick={handleFetchAllSystemTasks}>
+            Fetch All System Data 
+          </button>
+        </article>
+      )}
 
       <div className="dashboard-grid">
         {/* Left Column: Timer & Tasks */}
@@ -496,7 +595,9 @@ export default function Dashboard() {
           <article className="dashboard-card avatar-card">
             <h2>{userStats.username}</h2>
             <div className="avatar-display">
-              <div className="avatar-placeholder">🧑‍🎓</div>
+              <div className="avatar-placeholder">
+                <div className="avatar-sprite">🌱</div>
+              </div>
             </div>
             
             <div className="stats-section">
