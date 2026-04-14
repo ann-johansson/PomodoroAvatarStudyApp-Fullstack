@@ -45,6 +45,45 @@
   color: var(--home-muted);
 }
 
+.home-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-actions .btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.home-actions .btn-primary {
+  background-color: var(--home-text, #333);
+  color: var(--home-surface, #fff);
+  border: 1px solid var(--home-text, #333);
+}
+
+.home-actions .btn-primary:hover {
+  background-color: var(--home-muted, #555);
+  border-color: var(--home-muted, #555);
+}
+
+.home-actions .btn-secondary {
+  background-color: transparent;
+  color: var(--home-text, #333);
+  border: 1px solid var(--home-border, #ccc);
+}
+
+.home-actions .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 .home-cards {
   margin: 2.8rem auto 0;
   width: 100%;

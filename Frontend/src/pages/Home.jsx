@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './Home.css'
 
 export default function Home() {
@@ -10,6 +11,10 @@ export default function Home() {
           Build momentum with gentle pomodoro cycles, meaningful breaks, and
           clear goals for each session.
         </p>
+        <div className="home-actions">
+          <Link to="/register" className="btn btn-primary">Register</Link>
+          <Link to="/login" className="btn btn-secondary">Login</Link>
+        </div>
       </section>
 
       <section className="home-cards" aria-label="How it works">
