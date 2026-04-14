@@ -14,6 +14,17 @@ const getUserRole = () => {
   }
 }
 
+const getUserName = () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) return 'Student';
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 'Student';
+  } catch (e) {
+    return 'Student';
+  }
+}
+
 export default function Dashboard() {
   const navigate = useNavigate()
   const userRole = getUserRole()
@@ -70,7 +81,7 @@ export default function Dashboard() {
 
   // Fake User Stats
   const userStats = {
-    username: 'Scholar',
+    username: getUserName(),
     level: 12,
     xp: 450,
     xpRequired: 1000,
@@ -584,7 +595,9 @@ export default function Dashboard() {
           <article className="dashboard-card avatar-card">
             <h2>{userStats.username}</h2>
             <div className="avatar-display">
-              <div className="avatar-placeholder">🧑‍🎓</div>
+              <div className="avatar-placeholder">
+                <div className="avatar-sprite">🌱</div>
+              </div>
             </div>
             
             <div className="stats-section">

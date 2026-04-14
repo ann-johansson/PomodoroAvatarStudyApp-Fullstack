@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
 export default function Navbar() {
+  const location = useLocation()
+  const isAuthenticated = !!localStorage.getItem('authToken')
+
   const [activeTheme, setActiveTheme] = useState(() => {
     const rootTheme = document.documentElement.getAttribute('data-theme')
     return rootTheme || 'calm-green'
@@ -19,7 +22,11 @@ export default function Navbar() {
     <nav className="app-nav" aria-label="Primary">
       <div className="app-nav-links">
         <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
+        {isAuthenticated ? (
+          <Link to="/avatar">Avatar</Link>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
         <Link to="/dashboard">Dashboard</Link>
       </div>
 
