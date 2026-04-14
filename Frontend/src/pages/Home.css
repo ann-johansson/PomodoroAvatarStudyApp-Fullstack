@@ -11,10 +11,6 @@
   min-height: 100%;
   padding: 3.5rem 0 4.5rem;
   color: var(--home-text);
-  background:
-    radial-gradient(circle at 10% 12%, var(--overlay-light), transparent 35%),
-    radial-gradient(circle at 88% 8%, var(--overlay-mint), transparent 30%),
-    linear-gradient(135deg, var(--home-bg-soft), var(--home-bg-warm));
 }
 
 .home-hero {
