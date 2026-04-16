@@ -24,6 +24,14 @@ namespace PomodoroWebAPI.Controllers
             return Ok(tasks);
         }
 
+        // GET COMPLETED TASKS
+        [HttpGet("completed")]
+        public async Task<ActionResult<IEnumerable<TaskItem>>> GetCompletedTasks()
+        {
+            var tasks = await taskService.GetCompletedTasksAsync(GetUserId());
+            return Ok(tasks);
+        }
+
         // ADMIN ENDPOINT
         [Authorize(Roles = "Admin")]
         [HttpGet("all")]

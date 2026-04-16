@@ -14,6 +14,15 @@ namespace PomodoroWebAPI.Services
                 .ToListAsync();
         }
 
+        // GET COMPLETED TASKS
+        public async Task<IEnumerable<TaskItem>> GetCompletedTasksAsync(string userId)
+        {
+            return await context.Tasks
+                .Where(t => t.UserId == userId && t.Status == Models.TaskStatus.Done)
+                .OrderByDescending(t => t.CompletedAt)
+                .ToListAsync();
+        }
+
         // POST
         public async Task<TaskItem> CreateTaskAsync(TaskItem task, string userId)
         {
