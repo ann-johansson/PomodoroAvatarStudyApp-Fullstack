@@ -1,7 +1,9 @@
+/* Container for the entire Avatar page */
 .avatar-page {
   padding: 2rem 1rem 4rem;
   max-width: 800px;
   margin: 0 auto;
+  /* Simple fade-in animation on page load */
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -10,6 +12,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Page header section containing the title */
 .avatar-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -27,12 +30,14 @@
   font-size: 1.15rem;
 }
 
+/* Wrapper for centering the avatar card */
 .avatar-viewer {
   display: flex;
   justify-content: center;
   margin-bottom: 4rem;
 }
 
+/* The card displaying the avatar, its level, and XP */
 .avatar-card {
   background: var(--color-surface-strong);
   border: 1px solid var(--color-border-strong);
@@ -42,13 +47,16 @@
   box-shadow: var(--shadow-elevated);
   width: 100%;
   max-width: 380px;
+  /* Glassmorphism blur effect */
   backdrop-filter: blur(10px);
 }
 
+/* Circular stage behind the avatar sprite */
 .avatar-stage {
   width: 140px;
   height: 140px;
   margin: 0 auto 2rem;
+  /* Gradient background for a 3D bubble look */
   background: radial-gradient(circle at 30% 30%, var(--overlay-light), transparent), var(--color-bg-accent);
   border-radius: 50%;
   display: flex;
@@ -57,9 +65,11 @@
   box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 10px 20px var(--shadow-soft);
 }
 
+/* The actual avatar icon/emoji */
 .avatar-sprite {
   font-size: 5.5rem;
   line-height: 1;
+  /* Subtle floating animation */
   animation: float 3s ease-in-out infinite;
 }
 
@@ -69,6 +79,7 @@
   100% { transform: translateY(0px); }
 }
 
+/* Container for avatar details (name, title/level) */
 .avatar-info h2 {
   margin: 0;
   font-size: 1.8rem;
@@ -99,6 +110,7 @@
   margin-bottom: 0.5rem;
 }
 
+/* Background track for the progress bar */
 .xp-bar-bg {
   height: 12px;
   background: var(--color-bg-soft);
@@ -107,6 +119,7 @@
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
+/* The actual progress fill of the XP bar */
 .xp-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--color-primary-soft), var(--color-success));
@@ -114,12 +127,14 @@
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Grid layout for displaying various user stats */
 .avatar-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 
+/* Individual statistic card (e.g., Total Focus Time, Study Sessions) */
 .stat-card {
   background: var(--color-surface);
   padding: 1.75rem 1rem;
@@ -130,6 +145,7 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Interactive hover state for stat cards */
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-elevated);
@@ -155,6 +171,7 @@
   margin: 0;
 }
 
+/* Responsive adjustment: Stack stat cards in a single column on small screens */
 @media (max-width: 650px) {
   .avatar-stats {
     grid-template-columns: 1fr;

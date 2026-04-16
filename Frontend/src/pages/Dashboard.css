@@ -1,3 +1,8 @@
+/* 
+  Base container for the Dashboard page.
+  Defines localized CSS variables to make theme-switching or localized overrides easier,
+  and restricts maximum width so the content stays readable on wide screens.
+*/
 .dashboard-page {
   --dash-ink: var(--color-text);
   --dash-muted: var(--color-muted);
@@ -13,6 +18,7 @@
   padding: 1rem;
 }
 
+/* Header containing the page title */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -26,6 +32,7 @@
   font-size: 2rem;
 }
 
+/* Small uppercase label applied above headers (e.g., "Your Progress") for visual hierarchy */
 .dashboard-kicker {
   margin: 0;
   text-transform: uppercase;
@@ -35,18 +42,24 @@
   color: var(--dash-muted);
 }
 
+/* 
+  Main layout grid for the dashboard.
+  Uses a 2-column layout by default (Timer/Tasks on the left, Avatar stats on the right).
+*/
 .dashboard-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem;
 }
 
+/* Wrappers for the left (main) and right (side) columns so internal cards stack vertically */
 .dashboard-main-col, .dashboard-side-col {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
+/* General styling applied to all structural cards (Timer, Tasks, Avatar panels) on the dashboard */
 .dashboard-card {
   border: 1px solid var(--dash-border);
   border-radius: 16px;
@@ -61,7 +74,9 @@
   color: var(--dash-ink);
 }
 
-/* Timer Styles */
+/* === Timer Section Styles === */
+
+/* Header section within the timer card, holds title and small display */
 .timer-header {
   display: flex;
   align-items: baseline;
@@ -73,6 +88,7 @@
   margin: 0;
 }
 
+/* Small persistent timer display shown when active/minimized */
 .timer-display-small {
   font-size: 1.5rem;
   font-weight: 700;
@@ -84,15 +100,18 @@
   border-radius: 6px;
 }
 
+/* Large central focus timer display */
 .timer-display {
   font-size: 4.5rem;
   font-weight: 800;
   text-align: center;
+  /* tabular-nums prevents horizontal jumping when timer ticks between numbers like 1 and 0 */
   font-variant-numeric: tabular-nums;
   margin: 1.5rem 0;
   color: var(--dash-ink);
 }
 
+/* Action button container for Start, Pause, Reset */
 .timer-controls {
   display: flex;
   gap: 0.75rem;
@@ -100,6 +119,7 @@
   flex-wrap: wrap;
 }
 
+/* Section for setting custom minute times manually */
 .custom-timer {
   display: flex;
   justify-content: center;
@@ -121,12 +141,15 @@
   text-align: center;
   font-size: 1rem;
 }
+
 .custom-timer .btn-ghost {
   margin-top: 0;
   width: auto;
 }
 
-/* Common Buttons */
+/* === Common Button Styles === */
+
+/* Base properties shared across all dashboard buttons */
 .btn-primary, .btn-secondary, .btn-ghost {
   border-radius: 10px;
   padding: 0.6rem 1.2rem;
@@ -166,9 +189,9 @@
   border-style: solid;
 }
 
-/* Task List Styles */
+/* === Task List Styles === */
 .task-list {
-  list-style: none;
+  list-style: none; /* Removes default bullet points */
   padding: 0;
   margin: 0;
 }
@@ -190,18 +213,20 @@
   font-size: 1.05rem;
 }
 
+/* Stylization for tasks marked as finished */
 .task-completed span {
   text-decoration: line-through;
   color: var(--dash-muted);
 }
 
-/* Avatar Stats */
+/* === Avatar Mini-Stats Styles === */
 .avatar-display {
   display: flex;
   justify-content: center;
   margin: 1.5rem 0;
 }
 
+/* The circle display frame behind the user avatar */
 .avatar-placeholder {
   width: 140px;
   height: 140px;
@@ -214,6 +239,7 @@
   border: 4px solid var(--level-accent);
 }
 
+/* Animated avatar emoji floating inside the placeholder */
 .avatar-sprite {
   font-size: 5.5rem;
   line-height: 1;
@@ -248,6 +274,7 @@
   font-size: 0.9rem;
 }
 
+/* XP Progress Bar Track */
 .progress-bar-bg {
   width: 100%;
   height: 10px;
@@ -257,6 +284,7 @@
   margin-bottom: 0.5rem;
 }
 
+/* XP Progress Bar Filled Segment */
 .progress-bar-fill {
   height: 100%;
   background: var(--level-accent);
@@ -264,6 +292,7 @@
   transition: width 0.3s ease;
 }
 
+/* Coin display row emphasis styles */
 .text-gold {
   color: var(--gold-accent);
   font-weight: 700;
@@ -275,7 +304,7 @@
   border-top: 1px dashed var(--dash-border);
 }
 
-/* Activity Stats */
+/* === Activity Stats Section === */
 .activity-stats {
   display: flex;
   justify-content: space-between;
@@ -302,6 +331,7 @@
   letter-spacing: 0.05em;
 }
 
+/* Responsive breakpoint: Collapse the 2-column grid into a single column underneath 900px */
 @media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: 1fr;

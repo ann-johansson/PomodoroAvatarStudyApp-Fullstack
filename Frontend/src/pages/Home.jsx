@@ -4,6 +4,7 @@ import './Home.css'
 export default function Home() {
   return (
     <main className="home-page">
+      {/* Hero Section: Main landing introductory test and calls to action */}
       <section className="home-hero">
         <p className="home-kicker">Slow focus, steady progress</p>
         <h1>Study with a calm rhythm</h1>
@@ -11,13 +12,17 @@ export default function Home() {
           Build momentum with gentle pomodoro cycles, meaningful breaks, and
           clear goals for each session.
         </p>
+        
+        {/* Navigation buttons to auth flows using React Router Links */}
         <div className="home-actions">
           <Link to="/register" className="btn btn-primary">Register</Link>
           <Link to="/login" className="btn btn-secondary">Login</Link>
         </div>
       </section>
 
+      {/* Features Grid: Highlighting the core concepts of the app */}
       <section className="home-cards" aria-label="How it works">
+        {/* Feature 1: Single Task Focus */}
         <article className="home-card">
           <div className="home-card-icon">🎯</div>
           <h2>Set one clear task</h2>
@@ -27,6 +32,7 @@ export default function Home() {
           </p>
         </article>
 
+        {/* Feature 2: Analytics & Logging */}
         <article className="home-card">
           <div className="home-card-icon">📈</div>
           <h2>Track your sessions</h2>
@@ -36,6 +42,7 @@ export default function Home() {
           </p>
         </article>
 
+        {/* Feature 3: Avatar/Gamification */}
         <article className="home-card">
           <div className="home-card-icon">🌱</div>
           <h2>Reward consistency</h2>
