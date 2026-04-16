@@ -1,3 +1,7 @@
+/* 
+  Base container for the Home page.
+  Defines localized CSS variables derived from global theme variables.
+*/
 .home-page {
   --home-bg-soft: var(--color-bg-accent);
   --home-bg-warm: var(--color-bg-accent);
@@ -7,12 +11,17 @@
   --home-border: var(--color-border);
   --home-shadow: var(--shadow-soft);
 
+  /* Allow the container to grow and fill available screen height */
   flex: 1;
   min-height: 100%;
   padding: 3.5rem 0 4.5rem;
   color: var(--home-text);
 }
 
+/* 
+  Hero section container.
+  Restricts width and centers the main introductory text.
+*/
 .home-hero {
   max-width: 740px;
   margin: 0 auto;
@@ -20,6 +29,7 @@
   text-align: center;
 }
 
+/* Small, uppercase introductory label above the main title */
 .home-kicker {
   margin-bottom: 0.8rem;
   font-size: 0.84rem;
@@ -29,6 +39,7 @@
   font-weight: 600;
 }
 
+/* Main title styling with fluid typography (clamp) for responsiveness */
 .home-hero h1 {
   margin: 0;
   font-size: clamp(2rem, 4.6vw, 3.35rem);
@@ -37,21 +48,24 @@
   color: var(--home-text);
 }
 
+/* Subtitle/description text below the main heading */
 .home-subtitle {
   margin: 1.1rem auto 0;
-  max-width: 62ch;
+  max-width: 62ch; /* Limit character width for optimal readability */
   font-size: 1.03rem;
   line-height: 1.7;
   color: var(--home-muted);
 }
 
+/* Container for the primary call-to-action (CTA) buttons */
 .home-actions {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1rem; /* Spacing between buttons */
 }
 
+/* Shared baseline styles for both primary and secondary buttons */
 .home-actions .btn {
   display: inline-block;
   padding: 0.75rem 1.75rem;
@@ -64,6 +78,7 @@
   box-shadow: var(--shadow-soft);
 }
 
+/* Primary, high-emphasis button styling */
 .home-actions .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-on-primary);
@@ -73,10 +88,11 @@
 .home-actions .btn-primary:hover {
   background-color: var(--color-primary-strong);
   border-color: var(--color-primary-strong);
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Slight lift effect on hover */
   box-shadow: var(--shadow-card);
 }
 
+/* Secondary, outlined button styling */
 .home-actions .btn-secondary {
   background-color: var(--color-surface);
   color: var(--color-primary);
@@ -89,6 +105,10 @@
   box-shadow: var(--shadow-card);
 }
 
+/* 
+  Grid container for the feature/highlight cards below the hero section.
+  Uses a 3-column layout by default.
+*/
 .home-cards {
   margin: 3.5rem auto 0;
   max-width: 900px;
@@ -98,6 +118,7 @@
   gap: 1.5rem;
 }
 
+/* Individual feature card styling */
 .home-card {
   padding: 2rem 1.5rem;
   text-align: center;
@@ -105,15 +126,17 @@
   border: 1px solid var(--color-border-strong);
   border-radius: 16px;
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Lift and increase shadow on card hover */
 .home-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-elevated);
 }
 
+/* Large emoji/icon within each feature card */
 .home-card-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
@@ -133,15 +156,17 @@
   color: var(--color-muted);
 }
 
+/* Responsive adjustments for tablet and mobile screens */
 @media (max-width: 860px) {
   .home-page {
-    padding: 2.5rem 0 3rem;
+    padding: 2.5rem 0 3rem; /* Reduce vertical padding on small screens */
   }
 
   .home-hero {
     padding: 0 1rem;
   }
 
+  /* Stack feature cards into a single column on smaller screens */
   .home-cards {
     grid-template-columns: 1fr;
     gap: 1.5rem;
