@@ -1,40 +1,48 @@
+/* Main navigation bar container */
 .app-nav {
   display: flex;
   align-items: center;
   padding: 0.85rem 1.1rem;
   border-bottom: 0;
+  /* Semi-transparent background with blur for a glassmorphism effect */
   background: color-mix(in srgb, var(--color-bg) 82%, transparent);
   backdrop-filter: blur(3px);
 }
 
+/* Container for the navigation links (e.g., Home, Dashboard) */
 .app-nav-links {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
 
+/* Base styling for anchor tags within the navigation bar */
 .app-nav a {
   text-decoration: none;
   color: var(--color-link);
   font-weight: 600;
+  /* Pill-shaped buttons for links */
   border-radius: 999px;
   padding: 0.36rem 0.8rem;
   transition: background-color 0.2s ease;
 }
 
+/* Hover and focus states for navigation links */
 .app-nav a:hover,
 .app-nav a:focus-visible {
   background: var(--color-link-hover-bg);
   outline: none;
 }
 
+/* Container for right-aligned tools like the theme selector */
 .app-nav-tools {
-  margin-left: auto;
+  margin-left: auto; /* Pushes tools to the far right */
   display: flex;
   align-items: center;
   gap: 0.2rem;
 }
 
+/* Wrapper for the custom theme select dropdown to handle styling and pseudo-elements */
 .app-theme-select-wrap {
   position: relative;
   display: inline-flex;
@@ -45,6 +53,7 @@
   outline: none;
 }
 
+/* Custom dropdown chevron/arrow icon for the select element */
 .app-theme-select-wrap::after {
   content: '';
   position: absolute;
@@ -54,15 +63,18 @@
   border-right: 1.5px solid var(--color-muted);
   border-bottom: 1.5px solid var(--color-muted);
   transform: rotate(45deg) translateY(-1px);
-  pointer-events: none;
+  pointer-events: none; /* Let clicks pass through to the underlying select element */
   opacity: 0.8;
 }
 
+/* Reset and custom styling for the native select element */
 .app-nav-tools select {
+  /* Remove native browser styling */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 0;
+  /* Bottom border only for a clean underline look */
   border-bottom: 1px solid var(--color-border-strong);
   background: transparent;
   color: var(--color-text);
@@ -74,6 +86,7 @@
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
+/* Focus and active states for the select dropdown */
 .app-nav-tools select:focus,
 .app-nav-tools select:focus-visible {
   outline: none;
@@ -87,6 +100,7 @@
   box-shadow: none;
 }
 
+/* Hide the default dropdown arrow in Internet Explorer / Edge legacy */
 .app-nav-tools select::-ms-expand {
   display: none;
 }
@@ -95,15 +109,16 @@
   border-bottom-color: var(--color-primary);
 }
 
+/* Responsive adjustments for smaller screens */
 @media (max-width: 680px) {
   .app-nav {
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allow navbar items to wrap to a new line */
     row-gap: 0.55rem;
   }
 
   .app-nav-tools {
-    margin-left: 0;
-    width: 100%;
-    justify-content: flex-end;
+    margin-left: 0; /* Reset auto margin */
+    width: 100%; /* Force tools to take up full width on new line */
+    justify-content: flex-end; /* Align tools to the right */
   }
 }

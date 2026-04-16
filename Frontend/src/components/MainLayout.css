@@ -1,17 +1,26 @@
+
+
+/* Main application wrapper that covers the entire screen */
 .app-shell {
+  /* Ensure the app takes up at least the full viewport height */
   min-height: 100dvh;
+  /* Use flexbox column layout to stack child elements (like Navbar and Content) vertically */
   display: flex;
   flex-direction: column;
+  /* Multi-layered gradient background for depth and styling */
   background:
     radial-gradient(circle at 10% 12%, var(--overlay-light), transparent 35%),
     radial-gradient(circle at 88% 8%, var(--overlay-mint), transparent 30%),
     linear-gradient(135deg, var(--color-bg-soft), var(--color-bg-accent));
 }
 
+/* Container for the dynamic page content rendered underneath the Navbar */
 .app-content {
+  /* Grow to fill all remaining vertical space in the .app-shell */
   flex: 1;
   display: flex;
   flex-direction: column;
+  /* Reset dimensions and spacing */
   width: 100%;
   margin: 0;
   padding: 0;

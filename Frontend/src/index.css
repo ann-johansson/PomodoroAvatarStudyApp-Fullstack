@@ -1,8 +1,22 @@
+/* ==========================================================================
+   Global Stylesheet & CSS Custom Properties (Variables)
+   ==========================================================================
+   This file defines the foundational styling rules for the application.
+   It contains the global box-model reset, typography definitions, and the 
+   complete theming system powered by CSS variables.
+   
+   Theming works by mapping semantic variable names (like --color-bg, 
+   --color-primary) to specific hex/rgba values. When the data-theme attribute
+   changes on the root element, the browser repaints the UI using the new values.
+   ========================================================================== */
+
 :root {
+  /* --- Typography --- */
+  /* Use system fonts to match the user's OS for a native look and feel */
   --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
 
-  /* Core palette */
+  /* --- Core Palette (Mint Green Theme - Default) --- */
   --color-bg: #eef5f1;
   --color-bg-soft: #e2efe8;
   --color-bg-accent: #cfe3d7;
@@ -31,6 +45,15 @@
   --shadow-elevated: 0 14px 30px rgba(31, 48, 41, 0.1);
 }
 
+/* ==========================================================================
+   Theme Variations
+   ==========================================================================
+   These blocks override the :root variables defined above when the 
+   [data-theme] attribute matches. Elements styled with these variables will
+   automatically update their colors based on the active theme state.
+   ========================================================================== */
+
+/* Theme: Soft Blue (Oceanic focus mode) */
 :root[data-theme='soft-blue'] {
   --color-bg: #ecf4fa;
   --color-bg-soft: #ddebf7;
@@ -106,25 +129,39 @@
   --shadow-elevated: 0 14px 30px rgba(88, 64, 38, 0.12);
 }
 
+/* ==========================================================================
+   Global Resets & Base Element Styling
+   ========================================================================== */
+
+/* Apply a global border-box model for predictive element sizing */
 * {
   box-sizing: border-box;
 }
 
 body {
+  /* Resets the default browser margin to prevent whitespace edges */
   margin: 0;
+  
+  /* Ensure the body stretches to accommodate modern mobile safari screens */
   min-height: 100svh;
+  
+  /* Applying CSS variables from above for typography and colors */
   font-family: var(--font-body);
   color: var(--color-text);
   background: var(--color-bg);
+  
+  /* Optimization properties for crisper text rendering */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ensure React root mounts to full screen height so layouts can flex */
 #root {
   min-height: 100svh;
 }
 
+/* Base font for code and markdown blocks */
 code {
   font-family: var(--font-mono);
 }

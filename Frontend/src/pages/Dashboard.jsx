@@ -2,18 +2,20 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Dashboard.css'
 
+// Utility function: Parses the JWT to extract the user's role claim.
 const getUserRole = () => {
   const token = localStorage.getItem('authToken');
   if (!token) return null;
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    // Microsofts JWT claims mappar roller till denna långa URL-nyckel
+    // Microsoft JWT claims map roles to this long URI key
     return payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
   } catch (e) {
     return null;
   }
 }
 
+// Utility function: Parses the JWT to extract the user's name claim.
 const getUserName = () => {
   const token = localStorage.getItem('authToken');
   if (!token) return 'Student';
@@ -29,7 +31,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const userRole = getUserRole()
   
-  // Timer State
+  // Timer State Management
   const [focusTimeLeft, setFocusTimeLeft] = useState(25 * 60)
   const [breakTimeLeft, setBreakTimeLeft] = useState(5 * 60)
   const [isActive, setIsActive] = useState(false)
@@ -37,12 +39,13 @@ export default function Dashboard() {
   const [customMinutes, setCustomMinutes] = useState(25)
   const [sessionLength, setSessionLength] = useState(25) // The total duration of the current focus session
 
-  // Tasks State
+  // Tasks (Quests) State Management
   const [tasks, setTasks] = useState([])
   const [isAddingQuest, setIsAddingQuest] = useState(false)
   const [newQuestSubject, setNewQuestSubject] = useState('')
   const [newQuestExercise, setNewQuestExercise] = useState('')
 
+  // Handles creating a new task by submitting to the Backend
   const handleAddQuest = async () => {
     if (!newQuestSubject.trim() || !newQuestExercise.trim()) return;
     
@@ -79,7 +82,7 @@ export default function Dashboard() {
     }
   }
 
-  // Fake User Stats
+  // Fake User Stats (To be replaced with Backend logic later)
   const userStats = {
     username: getUserName(),
     level: 12,
@@ -88,16 +91,17 @@ export default function Dashboard() {
     coins: 1250
   }
   
-  // Study Sessions State
+  // Study Sessions State Management
   const [sessions, setSessions] = useState([])
   const [subjects, setSubjects] = useState([])
 
+  // On component mount, fetch Study Sessions, Subjects, and Tasks
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('authToken')
       if (token) {
         try {
-          // Fetch sessions
+          // Fetch completed past sessions
           const resSessions = await fetch('http://localhost:5168/api/studysessions', {
             headers: { 'Authorization': `Bearer ${token}` }
           })
@@ -163,6 +167,7 @@ export default function Dashboard() {
     fetchData()
   }, [])
 
+  // Timer Tick Logic: Runs via setInterval whenever timer is "Active"
   useEffect(() => {
     let interval = null
     if (isActive) {
@@ -235,6 +240,7 @@ export default function Dashboard() {
     return () => clearInterval(interval)
   }, [isActive, isBreak, focusTimeLeft, breakTimeLeft, sessionLength, subjects])
 
+  // Timer controls & helper functions
   const toggleTimer = () => setIsActive(!isActive)
   
   const resetFocusTimer = (minutes) => {
@@ -255,6 +261,7 @@ export default function Dashboard() {
     setBreakTimeLeft(5 * 60)
   }
 
+  // Toggles task completion by updating the DB and modifying UI optimistically
   const toggleTask = async (taskId) => {
     const taskToToggle = tasks.find(t => t.id === taskId);
     if (!taskToToggle) return;
@@ -338,6 +345,7 @@ export default function Dashboard() {
     navigate('/login')
   }
 
+  // Verify Authorization role directly with the Backend API test route
   const handleCheckAccess = async () => {
     const token = localStorage.getItem('authToken');
     if (!token) return;
@@ -360,14 +368,14 @@ export default function Dashboard() {
     }
   }
 
-  // Formatting time
+  // Formatting time display for Pomodoro Timer
   const focusMinutes = Math.floor(focusTimeLeft / 60)
   const focusSeconds = focusTimeLeft % 60
   
   const breakMinutes = Math.floor(breakTimeLeft / 60)
   const breakSeconds = breakTimeLeft % 60
 
-  // Activity Aggregation
+  // Activity Aggregation: Aggregate fetched sessions to compute stats
   const now = new Date();
   const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   
@@ -380,6 +388,7 @@ export default function Dashboard() {
   let weekCount = 0, weekMinutes = 0;
   let monthCount = 0, monthMinutes = 0;
 
+  // Compute daily/weekly/monthly stats based on fetched DB session history
   sessions.forEach(s => {
     // Attempt actual start or planned start
     const dateStr = s.actualStartTime || s.plannedStartTime;
@@ -412,6 +421,7 @@ export default function Dashboard() {
 
   return (
     <section className="dashboard-page">
+      {/* Header including Top Controls and Admin Tag */}
       <header className="dashboard-header">
         <div className="header-info">
           <p className="dashboard-kicker">Welcome back, Scholar! {userRole === 'Admin' && <span style={{color: 'red', marginLeft: '10px', fontWeight: 'bold'}}>ADMIN</span>}</p>
@@ -443,6 +453,7 @@ export default function Dashboard() {
         </div>
       </header>
 
+      {/* Admin Panel Section - Shown only to users with the 'Admin' role claim */}
       {userRole === 'Admin' && (
         <article className="dashboard-card" style={{ border: '2px solid var(--gold-accent)', marginBottom: '1.5rem', background: 'var(--dash-card-bg, #1a1a2e)' }}>
           <h2>👑 Admin Panel</h2>
@@ -453,6 +464,7 @@ export default function Dashboard() {
         </article>
       )}
 
+      {/* Main Content Layout Grid */}
       <div className="dashboard-grid">
         {/* Left Column: Timer & Tasks */}
         <div className="dashboard-main-col">
@@ -497,6 +509,7 @@ export default function Dashboard() {
                 </div>
               </>
             )}
+            {/* Standard Timer Controls */}
             <div className="timer-controls">
               <button className="btn-primary" onClick={toggleTimer}>
                 {isActive ? 'Pause' : 'Start'}
@@ -509,6 +522,7 @@ export default function Dashboard() {
               </button>
             </div>
             
+            {/* Custom Timer Input Controls */}
             <div className="custom-timer">
               <input 
                 type="number" 
@@ -533,6 +547,7 @@ export default function Dashboard() {
             </div>
           </article>
 
+          {/* Task Listing Section */}
           <article className="dashboard-card task-card">
             <h2>Today's Quests</h2>
             <ul className="task-list">
@@ -560,6 +575,7 @@ export default function Dashboard() {
                 )
               })}
             </ul>
+            {/* Add New Task Inline Row Form */}
             {isAddingQuest ? (
               <div className="add-quest-form" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1rem' }}>
                 <input 
@@ -619,6 +635,7 @@ export default function Dashboard() {
             </div>
           </article>
 
+          {/* Current / Aggregated Study Statistics */}
           <article className="dashboard-card stats-card" style={{ marginBottom: '0.5rem' }}>
             <h2>Today's Activity</h2>
             <div className="activity-stats">

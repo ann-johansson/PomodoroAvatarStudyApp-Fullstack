@@ -1,3 +1,7 @@
+/* 
+  Base container for the Authentication (Login/Register) page.
+  Using specific semantic CSS variables for easier local theming overrides. 
+*/
 .login-page {
   --tone-ink: var(--color-text);
   --tone-muted: var(--color-muted);
@@ -5,12 +9,14 @@
   --tone-surface: var(--color-surface);
   --tone-shadow: var(--shadow-elevated);
 
+  /* Center the card vertically minus navbar height */
   min-height: calc(100svh - 140px);
   display: grid;
   place-items: center;
   padding: 1rem 0;
 }
 
+/* Card casing that holds the entire form and header */
 .login-card {
   width: min(460px, 100%);
   padding: 1.4rem;
@@ -21,6 +27,7 @@
   text-align: left;
 }
 
+/* Small, uppercase label above the title */
 .login-kicker {
   margin: 0;
   text-transform: uppercase;
@@ -36,6 +43,7 @@
   color: var(--tone-ink);
 }
 
+/* Tab toggle container to switch between Login and Register modes */
 .auth-toggle {
   margin-top: 0.9rem;
   display: grid;
@@ -43,6 +51,7 @@
   gap: 0.45rem;
 }
 
+/* Styling for the individual auth-toggle tabs */
 .auth-toggle button {
   border: 1px solid var(--tone-border);
   background: var(--color-surface-strong);
@@ -53,18 +62,21 @@
   font-weight: 600;
 }
 
+/* Emphasized active state of the current auth tab */
 .auth-toggle button.active {
   background: linear-gradient(130deg, var(--color-primary-soft), var(--color-primary));
   color: var(--color-on-primary);
   border-color: transparent;
 }
 
+/* Vertical layout grid for inputs in the form */
 .login-form {
   margin-top: 1rem;
   display: grid;
   gap: 0.8rem;
 }
 
+/* Label grouping styling to align text above inputs */
 .login-form label {
   display: grid;
   gap: 0.35rem;
@@ -72,6 +84,7 @@
   color: var(--tone-muted);
 }
 
+/* Reusable styles for text/password inputs */
 .login-form input {
   border: 1px solid var(--tone-border);
   border-radius: 10px;
@@ -80,11 +93,13 @@
   color: var(--tone-ink);
 }
 
+/* Provides clear visual feedback when navigating inputs via keyboard (accessibility) */
 .login-form input:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
+/* Form submission button */
 .login-form button {
   margin-top: 0.2rem;
   border: 0;
@@ -96,11 +111,13 @@
   font-weight: 600;
 }
 
+/* Loading/disabled state during API requests */
 .login-form button:disabled {
   opacity: 0.75;
   cursor: not-allowed;
 }
 
+/* Action feedback text block (e.g. backend errors) */
 .auth-message {
   margin: 0.75rem 0 0;
   font-size: 0.9rem;
@@ -114,6 +131,7 @@
   color: #1b6f2a;
 }
 
+/* Small hint label below form */
 .login-hint {
   margin-top: 0.85rem;
   font-size: 0.88rem;
