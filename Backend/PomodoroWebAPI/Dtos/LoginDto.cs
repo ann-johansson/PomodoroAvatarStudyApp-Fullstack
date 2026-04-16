@@ -2,6 +2,7 @@
 
 namespace PomodoroWebAPI.Dtos
 {
+    // DTO for user login, containing the username and password fields with validation attributes
     public class LoginDto
     {
         [Required]

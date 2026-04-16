@@ -27,11 +27,11 @@ namespace PomodoroWebAPI
                     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
                 });
 
-            // 1. Hämta JWT-inställningar
+            // Get JWT settings from configuration
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]!);
 
-            // 2. Konfigurera Authentication
+            // Configure JWT authentication
             builder.Services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,6 +49,7 @@ namespace PomodoroWebAPI
                 };
             });
 
+            // Register application services for dependency injection
             builder.Services.AddScoped<TokenService>();
             builder.Services.AddScoped<AuthService>();
             builder.Services.AddScoped<TaskService>();
@@ -96,11 +97,13 @@ namespace PomodoroWebAPI
 
             app.MapControllers();
 
+            // Seed the database with initial users if it doesn't exist
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.Migrate(); // Skapar databasen automatiskt om den saknas
+                dbContext.Database.Migrate(); // Creates the database if it doesn't exist and apply any pending migrations
 
+                // Check if there are any users in the database, and if not, create an admin and a normal user
                 if (!dbContext.Users.Any())
                 {
                     var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<AppUser>();

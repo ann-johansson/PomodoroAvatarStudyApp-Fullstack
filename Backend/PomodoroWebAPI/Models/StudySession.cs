@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PomodoroWebAPI.Models
 {
+    // Enum to represent the status of a study session, with values for planned, active, completed, and cancelled sessions
     public enum SessionStatus
     {
         Planned,
@@ -35,7 +36,7 @@ namespace PomodoroWebAPI.Models
         public int BreakLengthMinutes { get; set; }
 
         // Status and Points
-        public SessionStatus Status { get; set; } = SessionStatus.Planned;
+        public SessionStatus Status { get; set; } = SessionStatus.Planned; // using enum to represent the status of the study session
         public int PointsEarned { get; set; }
     }
 }

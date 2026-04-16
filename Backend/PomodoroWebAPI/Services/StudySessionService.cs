@@ -9,6 +9,7 @@ namespace PomodoroWebAPI.Services
         // GET
         public async Task<IEnumerable<StudySession>> GetUserSessionsAsync(string userId)
         {
+            // Include the related Subject data when retrieving study sessions
             return await context.StudySessions
                 .Include(s => s.Subject) // Load related subject data
                 .Where(s => s.UserId == userId)
@@ -33,11 +34,11 @@ namespace PomodoroWebAPI.Services
         // PUT
         public async Task<StudySession?> UpdateSessionAsync(int sessionId, StudySession updatedSession, string userId)
         {
+            // Retrieve the existing session to ensure it belongs to the user and to update only specific fields
             var existingSession = await context.StudySessions.FirstOrDefaultAsync(s => s.Id == sessionId && s.UserId == userId);
 
             if (existingSession == null) return null;
 
-            // Only allow updates to certain fields
             existingSession.ActualStartTime = updatedSession.ActualStartTime;
             existingSession.EndTime = updatedSession.EndTime;
             existingSession.ActualDurationMinutes = updatedSession.ActualDurationMinutes;
@@ -51,6 +52,7 @@ namespace PomodoroWebAPI.Services
         // DELETE
         public async Task<bool> DeleteSessionAsync(int sessionId, string userId)
         {
+            // Retrieve the session to ensure it belongs to the user before deleting
             var session = await context.StudySessions.FirstOrDefaultAsync(s => s.Id == sessionId && s.UserId == userId);
 
             if (session == null) return false;

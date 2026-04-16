@@ -8,7 +8,8 @@ namespace PomodoroWebAPI.Services
 {
     public class AuthService(AppDbContext context)
     {
-        
+
+        // Registers a new user
         public async Task<bool> RegisterAsync(RegisterDto registerDto)
         {
             // Checks if the username already exists in the database
@@ -17,6 +18,7 @@ namespace PomodoroWebAPI.Services
                 return false;
             }
 
+            // If the username is available, we create a new AppUser and hash the password before saving it to the database
             var passwordHasher = new PasswordHasher<AppUser>();
             var user = new AppUser
             {
@@ -26,9 +28,9 @@ namespace PomodoroWebAPI.Services
                 Role = "User",
                 DisplayName = registerDto.DisplayName
             };
-
             user.PasswordHash = passwordHasher.HashPassword(user, registerDto.Password);
 
+            // Add the new user to the database and save changes
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
@@ -43,6 +45,7 @@ namespace PomodoroWebAPI.Services
             // If the user is not found, return null
             if (user == null) return null;
 
+            // If the user is found, we verify the password using the PasswordHasher
             var passwordHasher = new PasswordHasher<AppUser>();
             var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash!, loginDto.Password);
 

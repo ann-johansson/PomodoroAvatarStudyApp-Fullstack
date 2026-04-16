@@ -14,9 +14,10 @@ namespace PomodoroWebAPI.Controllers
     [ApiController]
     public class TasksController(TaskService taskService) : ControllerBase
     {
-        
+        // Helper method to get the authenticated user's ID from the JWT token claims
         private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
+        // GET to retrieve all tasks for the authenticated user
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskItem>>> GetMyTasks()
         {
@@ -24,7 +25,7 @@ namespace PomodoroWebAPI.Controllers
             return Ok(tasks);
         }
 
-        // ADMIN ENDPOINT
+        // ADMIN ENDPOINT to retrieve all tasks for all users, only accessible by users with the "Admin" role
         [Authorize(Roles = "Admin")]
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<TaskItem>>> GetAllTasksAdmin()
@@ -33,6 +34,7 @@ namespace PomodoroWebAPI.Controllers
             return Ok(tasks);
         }
 
+        // POST to create a new task for the authenticated user
         [HttpPost]
         public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
         {
@@ -40,6 +42,7 @@ namespace PomodoroWebAPI.Controllers
             return Ok(createdTask);
         }
 
+        // PUT to update an existing task for the authenticated user
         [HttpPut("{id}")]
         public async Task<ActionResult<TaskItem>> UpdateTask(int id, TaskItem task)
         {
@@ -50,6 +53,7 @@ namespace PomodoroWebAPI.Controllers
             return Ok(updatedTask);
         }
 
+        // DELETE to remove a task for the authenticated user
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTask(int id)
         {

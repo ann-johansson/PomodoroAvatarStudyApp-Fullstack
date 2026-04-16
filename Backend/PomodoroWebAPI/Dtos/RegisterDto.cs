@@ -2,6 +2,7 @@
 
 namespace PomodoroWebAPI.Dtos
 {
+    // DTO for user registration, containing fields with validation attributes
     public class RegisterDto
     {
         [Required]

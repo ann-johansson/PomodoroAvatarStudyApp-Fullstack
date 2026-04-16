@@ -8,6 +8,8 @@ namespace PomodoroWebAPI.Controllers
     [ApiController]
     public class AuthController(TokenService tokenService, AuthService authService) : ControllerBase
     {
+
+        // POST register endpoint for user registration
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
@@ -30,6 +32,7 @@ namespace PomodoroWebAPI.Controllers
             }
         }
 
+        // POST login endpoint for user authentication
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginDto loginDto)
         {
