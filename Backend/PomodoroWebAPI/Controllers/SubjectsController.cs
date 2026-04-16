@@ -12,8 +12,10 @@ namespace PomodoroWebAPI.Controllers
     [ApiController]
     public class SubjectsController(SubjectService subjectService) : ControllerBase
     {
+        // Helper method to get the authenticated user's ID from the JWT token claims
         private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
+        // GET to retrieve all subjects for the authenticated user
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Subject>>> GetMySubjects()
         {
@@ -21,6 +23,7 @@ namespace PomodoroWebAPI.Controllers
             return Ok(subjects);
         }
 
+        // POST to create a new subject for the authenticated user
         [HttpPost]
         public async Task<ActionResult<Subject>> CreateSubject(Subject subject)
         {
@@ -28,6 +31,7 @@ namespace PomodoroWebAPI.Controllers
             return Ok(createdSubject);
         }
 
+        // PUT to update an existing subject for the authenticated user
         [HttpPut("{id}")]
         public async Task<ActionResult<Subject>> UpdateSubject(int id, Subject subject)
         {
@@ -38,6 +42,7 @@ namespace PomodoroWebAPI.Controllers
             return Ok(updatedSubject);
         }
 
+        // DELETE to remove a subject for the authenticated user
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteSubject(int id)
         {

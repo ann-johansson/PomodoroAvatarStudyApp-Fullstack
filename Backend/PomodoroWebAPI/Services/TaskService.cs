@@ -49,6 +49,7 @@ namespace PomodoroWebAPI.Services
         // DELETE
         public async Task<bool> DeleteTaskAsync(int taskId, string userId)
         {
+            // Check if the task exists and belongs to the user
             var task = await context.Tasks.FirstOrDefaultAsync(t => t.Id == taskId && t.UserId == userId);
 
             if (task == null) return false;
@@ -58,10 +59,10 @@ namespace PomodoroWebAPI.Services
             return true;
         }
 
-        // ADMIN: GET ALL TASKS
+        // ADMIN: GET all tasks for all users, only accessible by users with the "Admin" role
         public async Task<IEnumerable<TaskItem>> GetAllTasksAdminAsync()
         {
-            return await context.Tasks.ToListAsync(); // Hämtar ALLA användares tasks
+            return await context.Tasks.ToListAsync();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace PomodoroWebAPI.Data
         {
         }
 
-        // Dessa blir tabellerna i din SQL-databas
+        // DbSet properties for each of our models, representing the tables in our database
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<TaskItem> Tasks { get; set; }

@@ -22,6 +22,7 @@ namespace PomodoroWebAPI.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        // Navigation properties to represent the relationships with TaskItem and StudySession entities
         public ICollection<TaskItem> Tasks { get; set; } = new List<TaskItem>();
         public ICollection<StudySession> StudySessions { get; set; } = new List<StudySession>();
     }

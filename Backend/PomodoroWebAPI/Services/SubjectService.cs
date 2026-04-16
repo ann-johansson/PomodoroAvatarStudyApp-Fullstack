@@ -28,6 +28,7 @@ namespace PomodoroWebAPI.Services
         // PUT
         public async Task<Subject?> UpdateSubjectAsync(int subjectId, Subject updatedSubject, string userId)
         {
+            // Retrieve the existing subject to ensure it belongs to the user and to update only specific fields
             var existingSubject = await context.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId && s.UserId == userId);
 
             if (existingSubject == null) return null;
@@ -44,6 +45,7 @@ namespace PomodoroWebAPI.Services
         // DELETE
         public async Task<bool> DeleteSubjectAsync(int subjectId, string userId)
         {
+            // Retrieve the subject to ensure it belongs to the user before deleting
             var subject = await context.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId && s.UserId == userId);
 
             if (subject == null) return false;
